@@ -1,0 +1,6 @@
+# Ignore YOLO model files and datasets
+yolov*.pt
+yolov*/
+*.weights
+*.onnx
+dataset/
