@@ -1,0 +1,70 @@
+2025-02-07 16:25:09,730 - tensorflow - WARNING - From C:\Users\gauth\AppData\Local\Programs\Python\Python311\Lib\site-packages\keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2025-02-07 16:25:10,173 - __main__ - INFO - PyTorch version: 2.3.0+cpu
+2025-02-07 16:25:10,174 - __main__ - INFO - TensorFlow version: 2.15.0
+2025-02-07 16:25:10,174 - __main__ - INFO - OpenCV version: 4.8.0
+2025-02-07 16:25:10,174 - __main__ - INFO - CUDA available: False
+2025-02-07 16:25:10,175 - __main__ - INFO - Checked directory: models
+2025-02-07 16:25:10,175 - __main__ - INFO - Checked directory: uploads
+2025-02-07 16:25:10,176 - __main__ - INFO - Checked directory: results
+2025-02-07 16:25:10,189 - __main__ - INFO - Checked directory: data/raw
+2025-02-07 16:25:10,190 - __main__ - INFO - Checked directory: data/processed
+2025-02-07 16:25:10,191 - __main__ - INFO - Checked directory: logs
+2025-02-07 16:25:10,191 - __main__ - INFO - Initializing system...
+2025-02-07 16:25:10,201 - modules.detector - INFO - Using cpu for inference
+2025-02-07 16:25:11,664 - deep_sort_realtime.embedder.embedder_pytorch - INFO - MobileNetV2 Embedder for Deep Sort initialised
+2025-02-07 16:25:11,665 - deep_sort_realtime.embedder.embedder_pytorch - INFO - - gpu enabled: False
+2025-02-07 16:25:11,665 - deep_sort_realtime.embedder.embedder_pytorch - INFO - - half precision: False
+2025-02-07 16:25:11,665 - deep_sort_realtime.embedder.embedder_pytorch - INFO - - max batch size: 16
+2025-02-07 16:25:11,665 - deep_sort_realtime.embedder.embedder_pytorch - INFO - - expects BGR: True
+2025-02-07 16:25:11,757 - deep_sort_realtime.deepsort_tracker - INFO - DeepSort Tracker initialised
+2025-02-07 16:25:11,757 - deep_sort_realtime.deepsort_tracker - INFO - - max age: 20
+2025-02-07 16:25:11,758 - deep_sort_realtime.deepsort_tracker - INFO - - appearance threshold: 0.2
+2025-02-07 16:25:11,758 - deep_sort_realtime.deepsort_tracker - INFO - - nms threshold: OFF
+2025-02-07 16:25:11,758 - deep_sort_realtime.deepsort_tracker - INFO - - max num of appearance features: None
+2025-02-07 16:25:11,759 - deep_sort_realtime.deepsort_tracker - INFO - - overriding track class : No
+2025-02-07 16:25:11,759 - deep_sort_realtime.deepsort_tracker - INFO - - today given : No
+2025-02-07 16:25:11,759 - deep_sort_realtime.deepsort_tracker - INFO - - in-build embedder : Yes
+2025-02-07 16:25:11,759 - deep_sort_realtime.deepsort_tracker - INFO - - polygon detections : No
+2025-02-07 16:25:43,888 - __main__ - INFO - Processing completed successfully
+2025-02-07 16:27:34,257 - tensorflow - WARNING - From C:\Users\gauth\AppData\Local\Programs\Python\Python311\Lib\site-packages\keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2025-02-07 16:27:34,680 - __main__ - INFO - PyTorch version: 2.3.0+cpu
+2025-02-07 16:27:34,681 - __main__ - INFO - TensorFlow version: 2.15.0
+2025-02-07 16:27:34,681 - __main__ - INFO - OpenCV version: 4.8.0
+2025-02-07 16:27:34,681 - __main__ - INFO - CUDA available: False
+2025-02-07 16:27:34,681 - __main__ - INFO - Checked directory: models
+2025-02-07 16:27:34,682 - __main__ - INFO - Checked directory: uploads
+2025-02-07 16:27:34,682 - __main__ - INFO - Checked directory: results
+2025-02-07 16:27:34,683 - __main__ - INFO - Checked directory: data/raw
+2025-02-07 16:27:34,684 - __main__ - INFO - Checked directory: data/processed
+2025-02-07 16:27:34,684 - __main__ - INFO - Checked directory: logs
+2025-02-07 16:27:34,684 - __main__ - INFO - Initializing system...
+2025-02-07 16:27:34,695 - modules.detector - INFO - Using cpu for inference
+2025-02-07 16:27:36,313 - deep_sort_realtime.embedder.embedder_pytorch - INFO - MobileNetV2 Embedder for Deep Sort initialised
+2025-02-07 16:27:36,313 - deep_sort_realtime.embedder.embedder_pytorch - INFO - - gpu enabled: False
+2025-02-07 16:27:36,314 - deep_sort_realtime.embedder.embedder_pytorch - INFO - - half precision: False
+2025-02-07 16:27:36,314 - deep_sort_realtime.embedder.embedder_pytorch - INFO - - max batch size: 16
+2025-02-07 16:27:36,314 - deep_sort_realtime.embedder.embedder_pytorch - INFO - - expects BGR: True
+2025-02-07 16:27:36,419 - deep_sort_realtime.deepsort_tracker - INFO - DeepSort Tracker initialised
+2025-02-07 16:27:36,420 - deep_sort_realtime.deepsort_tracker - INFO - - max age: 20
+2025-02-07 16:27:36,421 - deep_sort_realtime.deepsort_tracker - INFO - - appearance threshold: 0.2
+2025-02-07 16:27:36,422 - deep_sort_realtime.deepsort_tracker - INFO - - nms threshold: OFF
+2025-02-07 16:27:36,423 - deep_sort_realtime.deepsort_tracker - INFO - - max num of appearance features: None
+2025-02-07 16:27:36,423 - deep_sort_realtime.deepsort_tracker - INFO - - overriding track class : No
+2025-02-07 16:27:36,423 - deep_sort_realtime.deepsort_tracker - INFO - - today given : No
+2025-02-07 16:27:36,423 - deep_sort_realtime.deepsort_tracker - INFO - - in-build embedder : Yes
+2025-02-07 16:27:36,425 - deep_sort_realtime.deepsort_tracker - INFO - - polygon detections : No
+2025-02-07 16:31:23,423 - __main__ - INFO - Processing completed successfully
+2025-03-02 12:06:34,469 - tensorflow - WARNING - From C:\Users\gauth\AppData\Local\Programs\Python\Python311\Lib\site-packages\keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2025-03-02 12:06:35,211 - __main__ - ERROR - Error importing modules: No module named 'modules.traffic_signal_controller'
+2025-03-02 12:06:35,212 - __main__ - ERROR - Please make sure all required modules are in the correct directory
+2025-03-02 12:08:47,609 - tensorflow - WARNING - From C:\Users\gauth\AppData\Local\Programs\Python\Python311\Lib\site-packages\keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2025-03-02 12:08:48,203 - __main__ - ERROR - Error importing modules: No module named 'modules.emergency_vehicle_handler'
+2025-03-02 12:08:48,203 - __main__ - ERROR - Please make sure all required modules are in the correct directory
+2025-03-02 12:09:43,520 - tensorflow - WARNING - From C:\Users\gauth\AppData\Local\Programs\Python\Python311\Lib\site-packages\keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2025-03-02 12:10:42,222 - tensorflow - WARNING - From C:\Users\gauth\AppData\Local\Programs\Python\Python311\Lib\site-packages\keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
