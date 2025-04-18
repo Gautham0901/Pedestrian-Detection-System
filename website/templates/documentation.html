@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+
+{% block title %}Pedestrian Detection System - Documentation{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <h1 class="mb-4">Documentation</h1>
+        
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="list-group sticky-top pt-3">
+                    <a href="#getting-started" class="list-group-item list-group-item-action">Getting Started</a>
+                    <a href="#installation" class="list-group-item list-group-item-action">Installation</a>
+                    <a href="#usage" class="list-group-item list-group-item-action">Usage</a>
+                    <a href="#api" class="list-group-item list-group-item-action">API Reference</a>
+                    <a href="#models" class="list-group-item list-group-item-action">Models</a>
+                    <a href="#faq" class="list-group-item list-group-item-action">FAQ</a>
+                </div>
+            </div>
+            
+            <div class="col-lg-9">
+                <div id="getting-started" class="mb-5">
+                    <h2 class="border-bottom pb-2">Getting Started</h2>
+                    <p class="lead">
+                        The Pedestrian Detection System is designed to be easy to set up and use. This documentation will guide you through the installation process and basic usage.
+                    </p>
+                    <p>
+                        The system consists of several components:
+                    </p>
+                    <ul>
+                        <li><strong>Object detection module using YOLOv10</strong> (primary model) with YOLOv8 as an alternative option</li>
+                        <li>Tracking module using DeepSORT</li>
+                        <li>Analytics module for data processing</li>
+                        <li>Web interface for visualization and control</li>
+                    </ul>
+                </div>
+                
+                <div id="installation" class="mb-5">
+                    <h2 class="border-bottom pb-2">Installation</h2>
+                    <p>Follow these steps to install the system:</p>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">Prerequisites</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li>Python 3.8 or higher</li>
+                                <li>CUDA-compatible GPU (recommended for real-time processing)</li>
+                                <li>Git</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">Step 1: Clone the repository</h5>
+                        </div>
+                        <div class="card-body">
+                            <pre><code>git clone https://github.com/username/pedestrian-detection.git
+cd pedestrian-detection</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">Step 2: Install dependencies</h5>
+                        </div>
+                        <div class="card-body">
+                            <pre><code>pip install -r requirements.txt</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">Step 3: Download pre-trained models</h5>
+                        </div>
+                        <div class="card-body">
+                            <pre><code>python download_models.py</code></pre>
+                            <p class="mt-2 mb-0">This will download the YOLOv10 and other required model weights.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="usage" class="mb-5">
+                    <h2 class="border-bottom pb-2">Usage</h2>
+                    
+                    <h4 class="mt-4">Running the Web Interface</h4>
+                    <pre><code>python app.py</code></pre>
+                    <p>This will start the Flask web server. Navigate to <code>http://localhost:5000</code> in your browser to access the interface.</p>
+                    
+                    <h4 class="mt-4">Processing a Video File</h4>
+                    <p>You can process a video file through the web interface or using the command line:</p>
+                    <pre><code>python main.py --input path/to/video.mp4 --output path/to/output.mp4</code></pre>
+                    
+                    <h4 class="mt-4">Configuration</h4>
+                    <p>The system can be configured by editing the <code>config.yaml</code> file in the configs directory.</p>
+                </div>
+                
+                <div id="api" class="mb-5">
+                    <h2 class="border-bottom pb-2">API Reference</h2>
+                    
+                    <h4 class="mt-4">REST API Endpoints</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Endpoint</th>
+                                    <th>Method</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>/api/process-video</code></td>
+                                    <td>POST</td>
+                                    <td>Upload and process a video file</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/api/processing-status</code></td>
+                                    <td>GET</td>
+                                    <td>Check the status of video processing</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div id="models" class="mb-5">
+                    <h2 class="border-bottom pb-2">Models</h2>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header bg-light bg-primary text-white">
+                            <h5 class="mb-0">YOLOv10</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>YOLOv10 is the primary object detection model</strong> used in this system. It provides superior accuracy and excellent real-time performance for pedestrian detection.</p>
+                            <p>Key features:</p>
+                            <ul>
+                                <li>State-of-the-art accuracy with improved detection of small objects</li>
+                                <li>Enhanced real-time inference capabilities</li>
+                                <li>Better handling of occlusions and crowded scenes</li>
+                                <li>Multiple model sizes (nano, small, medium, large, xlarge)</li>
+                                <li>Reduced false positives compared to previous YOLO versions</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">YOLOv8</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>YOLOv8 is provided as an alternative object detection model. It offers good accuracy and performance for pedestrian detection.</p>
+                            <p>Key features:</p>
+                            <ul>
+                                <li>Good accuracy for general object detection</li>
+                                <li>Real-time inference on modern GPUs</li>
+                                <li>Multiple model sizes (nano, small, medium, large, xlarge)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">DeepSORT</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>DeepSORT is used for multi-object tracking. It combines appearance features with motion information to track pedestrians across video frames.</p>
+                            <p>Key features:</p>
+                            <ul>
+                                <li>Robust tracking in crowded scenes</li>
+                                <li>Low ID switches</li>
+                                <li>Efficient implementation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="faq" class="mb-5">
+                    <h2 class="border-bottom pb-2">Frequently Asked Questions</h2>
+                    
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faqOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                    What hardware is recommended for real-time processing?
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    For real-time processing at 30+ FPS, we recommend a system with an NVIDIA GPU with at least 8GB VRAM (e.g., RTX 3060 or better). For CPU-only inference, expect significantly lower performance.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faqTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                    Can the system work with IP cameras or RTSP streams?
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes, the system supports IP cameras and RTSP streams. You can specify the stream URL in the configuration file or through the web interface.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faqThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                                    How can I improve detection accuracy?
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    To improve detection accuracy, you can:
+                                    <ul>
+                                        <li>Use a larger model variant (e.g., YOLOv10x instead of YOLOv10n)</li>
+                                        <li>Fine-tune the model on your specific dataset</li>
+                                        <li>Adjust the confidence threshold in the configuration</li>
+                                        <li>Ensure good lighting conditions in the video</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

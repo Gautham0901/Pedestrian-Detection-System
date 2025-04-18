@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-5">Project Showcase</h1>
+
+    <!-- Example Videos Section -->
+    <section class="mb-5">
+        <h2 class="mb-4">Example Results</h2>
+        <div class="row">
+            <!-- Crowded Scene Example -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Crowded Scene Analysis</h5>
+                        <video class="w-100 mb-3" controls>
+                            <source src="{{ url_for('static', filename='videos/demo.mp4') }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <p class="card-text">
+                            <strong>Metrics:</strong>
+                            <ul>
+                                <li>Average Detection FPS: 25.3</li>
+                                <li>Pedestrians Tracked: 47</li>
+                                <li>Tracking Accuracy: 92%</li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Low-Light Scene Example -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Low-Light Performance</h5>
+                        <video class="w-100 mb-3" controls>
+                            <source src="{{ url_for('static', filename='videos/low_light_demo.mp4') }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <p class="card-text">
+                            <strong>Metrics:</strong>
+                            <ul>
+                                <li>Average Detection FPS: 28.1</li>
+                                <li>Pedestrians Tracked: 12</li>
+                                <li>Tracking Accuracy: 89%</li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Metrics Section -->
+    <section class="mb-5">
+        <h2 class="mb-4">Performance Metrics</h2>
+        <div class="row">
+            <!-- Model Comparison -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Model Performance</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Precision</td>
+                                    <td>94%</td>
+                                </tr>
+                                <tr>
+                                    <td>Recall</td>
+                                    <td>91%</td>
+                                </tr>
+                                <tr>
+                                    <td>F1 Score</td>
+                                    <td>92%</td>
+                                </tr>
+                                <tr>
+                                    <td>Average FPS</td>
+                                    <td>22</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tracking Performance -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Tracking Performance</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Tracking Accuracy</td>
+                                    <td>90%</td>
+                                </tr>
+                                <tr>
+                                    <td>ID Switches</td>
+                                    <td>8</td>
+                                </tr>
+                                <tr>
+                                    <td>Processing Speed</td>
+                                    <td>26 FPS</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features Section -->
+    <section class="mb-5">
+        <h2 class="mb-4">Key Features</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Real-time Detection</h5>
+                        <p class="card-text">Advanced YOLOv10 model optimized for pedestrian detection with high accuracy and speed.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Robust Tracking</h5>
+                        <p class="card-text">State-of-the-art tracking algorithm maintaining consistent IDs across frames.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Analytics Dashboard</h5>
+                        <p class="card-text">Comprehensive analytics including crowd density, movement patterns, and zone monitoring.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="mb-5">
+        <h2 class="mb-4">Sample Results</h2>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Download Sample Results</h5>
+                        <p class="card-text">Download processed video samples and detailed analytics reports.</p>
+                        <a href="{{ url_for('static', filename='downloads/sample_results.zip') }}" class="btn btn-primary">Download Samples</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

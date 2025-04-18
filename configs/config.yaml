@@ -1,0 +1,110 @@
+# Model Configuration
+model_path: "models/yolo11s.pt"
+confidence_threshold: 0.5
+
+# Tracker Configuration
+tracker:
+  max_age: 30
+  min_hits: 3
+  iou_threshold: 0.3
+  n_init: 3
+
+# Detection Configuration
+detection:
+  confidence_threshold: 0.5
+  nms_threshold: 0.4
+
+# Display Configuration
+display:
+  show_boxes: true             # Show bounding boxes around detected people
+  show_labels: true            # Show ID labels and confidence scores
+  show_trails: true            # Show motion trails
+  box_color: [0, 255, 0]       # RGB color for bounding boxes
+  text_color: [255, 255, 255]  # RGB color for text
+  font_scale: 0.7              # Font scale for OpenCV text
+  line_thickness: 2            # Line thickness for boxes and trails
+
+# Preprocessing Configuration
+preprocessing:
+  resize: false                # Enable/disable frame resizing
+  width: 640                   # Target width if resize is enabled
+  height: 480                  # Target height if resize is enabled
+  normalize: false             # Normalize pixel values (0-1)
+
+# Analytics Configuration
+analytics:
+  dwell_time_threshold: 30     # Minimum time (seconds) to consider for dwell analysis
+  crowd_threshold: 15          # Number of people to trigger crowd alert
+  zone_definition:             # Define monitoring zones
+    entry:
+      x1: 0
+      y1: 0
+      x2: 100
+      y2: 480
+    exit:
+      x1: 540
+      y1: 0
+      x2: 640
+      y2: 480
+
+# Performance Configuration
+performance:
+  batch_size: 1               # Batch size for inference
+  enable_gpu: true            # Enable GPU acceleration
+  fp16: false                 # Enable half-precision floating point
+  cpu_threads: 0             # Number of CPU threads (0 = auto)
+
+# Output Configuration
+output:
+  save_video: true            # Save processed video
+  save_analytics: true        # Save analytics data
+  video_format: "mp4v"        # Video codec (mp4v, avc1, etc.)
+  analytics_format: "csv"     # Analytics export format
+  log_level: "INFO"          # Logging level (DEBUG, INFO, WARNING, ERROR)
+
+# System Configuration
+system:
+  retry_attempts: 3           # Number of retry attempts for video processing
+  retry_delay: 1             # Delay between retries (seconds)
+  memory_limit: 0            # Memory limit in GB (0 = no limit)
+
+# XAI Configuration
+xai:
+  enabled: true
+  show_heatmap: false
+  show_lime: false  # LIME is more computationally intensive
+
+# Visualization Configuration
+visualization:
+  advanced: true
+  show_heatmap: true
+  show_zones: true
+  show_flow: true
+  composite_view: true
+  
+  zones:
+    entrance:
+      - [0, 360]
+      - [320, 720]
+    exit:
+      - [960, 360]
+      - [1280, 720]
+    center:
+      - [320, 180]
+      - [960, 540]
+
+model:
+  backbone:
+    - [<model_type>, <model_parameters>]
+  task: detect
+
+traffic_management:
+  signal_control:
+    min_green_time: 30
+    max_green_time: 120
+    yellow_time: 3
+  violation_detection:
+    speed_limit: 60
+    red_light_tolerance: 1.5
+  emergency:
+    priority_timeout: 300

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-center mb-4">Video Analysis Results</h2>
+        </div>
+    </div>
+
+    <!-- Video Playback Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Processed Video</h5>
+                </div>
+                <div class="card-body">
+                    <video id="processedVideo" class="w-100" controls>
+                        <source src="{{ video_url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- XAI Explanations Section -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">XAI Explanations</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for explanation in xai_explanations %}
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100">
+                                <img src="{{ explanation.image_url }}" class="card-img-top" alt="XAI Visualization">
+                                <div class="card-body">
+                                    <h6 class="card-title">Frame {{ explanation.frame_number }}</h6>
+                                    <p class="card-text">{{ explanation.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Add any custom JavaScript for video playback control here
+    document.addEventListener('DOMContentLoaded', function() {
+        const video = document.getElementById('processedVideo');
+        // Add custom video controls if needed
+    });
+</script>
+{% endblock %}

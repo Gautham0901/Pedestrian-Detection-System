@@ -1,0 +1,367 @@
+{% extends "base.html" %}
+
+{% block title %}Pedestrian Detection System - Demo{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script src="{{ url_for('static', filename='js/demo_video.js') }}"></script>
+<script>
+    // Initialize Socket.IO connection when document loads
+    document.addEventListener('DOMContentLoaded', function() {
+        const socket = io();
+        
+        socket.on('connect', function() {
+            console.log('WebSocket connected');
+        });
+        
+        socket.on('processing_update', function(data) {
+            if (data.progress) {
+                updateProgress(data.progress);
+            }
+        });
+        
+        socket.on('connect_error', function(error) {
+            console.error('WebSocket connection error:', error);
+            showError('Real-time connection failed');
+        });
+    });
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .video-container {
+        position: relative;
+        background: var(--darker-bg);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .video-feed {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+    #detection-overlay {
+        pointer-events: none;
+        z-index: 10;
+    }
+    .controls {
+        background: rgba(0,0,0,0.8);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 1rem;
+        backdrop-filter: blur(5px);
+    }
+    .stats-card {
+        background: var(--darker-bg);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .upload-zone {
+        border: 2px dashed rgba(255,255,255,0.2);
+        border-radius: 8px;
+        padding: 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: rgba(255,255,255,0.05);
+    }
+    .upload-zone:hover {
+        border-color: var(--accent);
+        background: rgba(0,123,255,0.1);
+        transform: translateY(-2px);
+    }
+    .tracking-id {
+        background: rgba(0,123,255,0.2);
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .tracking-id .confidence {
+        background: rgba(255,255,255,0.2);
+        padding: 0.125rem 0.375rem;
+        border-radius: 10px;
+        font-size: 0.75rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-5">Live Pedestrian Detection Demo</h1>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="video-container mb-4">
+                <div id="video-feed" class="ratio ratio-16x9 position-relative">
+                    <video class="video-feed" id="camera-feed" autoplay playsinline controls>
+                        Your browser does not support the video element.
+                    </video>
+                    <canvas id="detection-overlay" class="position-absolute top-0 start-0 w-100 h-100"></canvas>
+                </div>
+                <!-- Add the output video container here -->
+                <div id="output-video-container" class="mt-4"></div>
+            </div>
+
+            <div class="controls">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <button id="startCamera" class="btn btn-primary me-2">
+                            <i class="fas fa-video me-2"></i>Start Process
+                        </button>
+                        <button id="stopCamera" class="btn btn-danger me-2" disabled>
+                            <i class="fas fa-stop-circle me-2"></i>Stop
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="stats-card mb-4">
+                <h4 class="mb-3">Detection Statistics</h4>
+                <div class="mb-3">
+                    <label class="form-label">Pedestrians Detected</label>
+                    <h2 id="pedestrianCount" class="mb-0">0</h2>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Processing FPS</label>
+                    <h2 id="processingFPS" class="mb-0">0</h2>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Average Confidence</label>
+                    <h2 id="avgConfidence" class="mb-0">0%</h2>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tracking IDs</label>
+                    <div id="trackingIds" class="d-flex flex-wrap gap-2"></div>
+                </div>
+            </div>
+
+            <div class="upload-zone" id="uploadZone">
+                <i class="fas fa-cloud-upload-alt fa-3x mb-3"></i>
+                <h5>Upload Video</h5>
+                <p class="text-muted">Drag and drop a video file here or click to select</p>
+                <input type="file" id="videoUpload" accept="video/*" class="d-none">
+            </div>
+            
+            <!-- Processing Status -->
+            <div id="processingStatus" class="alert d-none mt-4">
+                <div id="statusMessage"></div>
+                <div id="progressContainer" class="progress mt-3 d-none">
+                    <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <!-- Results Container -->
+            <div id="resultContainer" class="mt-4 d-none">
+                <h5>Processing Results</h5>
+                <div class="alert alert-success">
+                    <p>Video processing completed! The analysis report is ready for download.</p>
+                    <a id="downloadReport" href="#" class="btn btn-primary mt-2">
+                        <i class="fas fa-download me-2"></i>Download Analysis Report
+                    </a>
+                </div>
+                <div class="mt-3">
+                    <h6>Report Contents:</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-chart-bar me-2"></i>Detection Statistics</li>
+                        <li><i class="fas fa-brain me-2"></i>XAI Visualizations</li>
+                        <li><i class="fas fa-chart-line me-2"></i>Traffic Analysis</li>
+                        <li><i class="fas fa-lightbulb me-2"></i>Recommendations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const uploadZone = document.getElementById('uploadZone');
+        const videoUpload = document.getElementById('videoUpload');
+        const processingStatus = document.getElementById('processingStatus');
+        const statusMessage = document.getElementById('statusMessage');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const resultContainer = document.getElementById('resultContainer');
+        const resultVideo = document.getElementById('resultVideo');
+        const resultSource = document.getElementById('resultSource');
+        const cameraFeed = document.getElementById('camera-feed');
+        const pedestrianCount = document.getElementById('pedestrianCount');
+        const processingFPS = document.getElementById('processingFPS');
+
+        // Handle drag and drop
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('border-primary');
+        });
+
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.classList.remove('border-primary');
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('border-primary');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('video/')) {
+                handleVideoUpload(file);
+            } else {
+                showError('Please upload a valid video file.');
+            }
+        });
+
+        // Handle click to upload
+        uploadZone.addEventListener('click', () => {
+            videoUpload.click();
+        });
+
+        videoUpload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file && file.type.startsWith('video/')) {
+                handleVideoUpload(file);
+            } else if (file) {
+                showError('Please upload a valid video file.');
+            }
+        });
+
+        function showError(message) {
+            processingStatus.classList.remove('d-none', 'alert-info', 'alert-success');
+            processingStatus.classList.add('alert-danger');
+            statusMessage.textContent = message;
+            progressContainer.classList.add('d-none');
+        }
+
+        function updateProgress(progress) {
+            progressBar.style.width = `${progress}%`;
+            progressBar.setAttribute('aria-valuenow', progress);
+        }
+
+        async function handleVideoUpload(file) {
+            const formData = new FormData();
+            formData.append('video', file);
+
+            // Show processing status
+            processingStatus.classList.remove('d-none', 'alert-danger');
+            processingStatus.classList.add('alert-info');
+            statusMessage.textContent = 'Uploading video...';
+            progressContainer.classList.remove('d-none');
+            updateProgress(0);
+
+            try {
+                const response = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                if (data.job_id) {
+                    // Start polling for status
+                    statusMessage.textContent = 'Processing video...';
+                    pollStatus(data.job_id);
+                } else {
+                    showError('Failed to start processing');
+                }
+            } catch (error) {
+                showError('Error uploading video: ' + error.message);
+            }
+        }
+
+        async function pollStatus(jobId) {
+            try {
+                let attempts = 0;
+                const maxAttempts = 60; // Increased max attempts
+                const pollInterval = 2000; // 2 seconds
+                const timeoutDuration = maxAttempts * pollInterval; // Total timeout duration
+                const startTime = Date.now();
+
+                const pollTimer = setInterval(async () => {
+                    try {
+                        const response = await fetch(`/api/status/${jobId}`);
+                        if (!response.ok) {
+                            throw new Error(`Server error: ${response.status}`);
+                        }
+
+                        const data = await response.json();
+                        if (!data || typeof data.status === 'undefined') {
+                            throw new Error('Invalid response format');
+                        }
+
+                        switch(data.status) {
+                            case 'completed':
+                                clearInterval(pollTimer);
+                                processingStatus.classList.remove('alert-info');
+                                processingStatus.classList.add('alert-success');
+                                statusMessage.textContent = 'Processing completed successfully!';
+                                progressContainer.classList.add('d-none');
+
+                                resultContainer.classList.remove('d-none');
+                                if (data.video_url) {
+                                    const videoElement = document.getElementById('processedVideo');
+                                    if (videoElement) {
+                                        videoElement.src = data.video_url;
+                                        videoElement.classList.remove('d-none');
+                                        videoElement.onerror = () => showError('Error loading processed video');
+                                    }
+                                }
+
+                                const downloadButton = document.getElementById('downloadReport');
+                                downloadButton.href = `/api/download/${jobId}`;
+                                break;
+
+                            case 'failed':
+                                clearInterval(pollTimer);
+                                showError(data.error || 'Processing failed');
+                                break;
+
+                            case 'processing':
+                                if (data.progress !== undefined) {
+                                    updateProgress(data.progress);
+                                    const timeElapsed = Math.floor((Date.now() - startTime) / 1000);
+                                    statusMessage.textContent = `Processing video... ${data.progress}% (${timeElapsed}s elapsed)`;
+                                }
+                                break;
+
+                            default:
+                                console.warn('Unknown status:', data.status);
+                        }
+
+                        attempts++;
+                        if (attempts >= maxAttempts || (Date.now() - startTime) >= timeoutDuration) {
+                            clearInterval(pollTimer);
+                            showError(`Processing timeout after ${Math.floor(timeoutDuration/1000)}s. Please try again or contact support if the issue persists.`);
+                        }
+                    } catch (error) {
+                        console.error('Poll iteration error:', error);
+                        attempts++;
+                        if (attempts >= maxAttempts) {
+                            clearInterval(pollTimer);
+                            showError(`Connection error: ${error.message}. Please check your network connection and try again.`);
+                        }
+                    }
+                }, pollInterval);
+
+                // Cleanup function for page navigation/reload
+                window.addEventListener('beforeunload', () => clearInterval(pollTimer));
+
+            } catch (error) {
+                showError(`Failed to start polling: ${error.message}`);
+            }
+        }
+        });
+</script>
+{% endblock %}

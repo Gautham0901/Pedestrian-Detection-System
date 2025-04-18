@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}About the Project{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-5"><em>About the Project</em></h1>
+    
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="system-architecture mb-5">
+                <h2>System Architecture</h2>
+                <h3>Detection Layer</h3>
+                <p>Utilizes YOLOv10 for accurate real-time pedestrian detection with enhanced performance through:</p>
+                <ul>
+                    <li>Advanced feature extraction</li>
+                    <li>Multi-scale detection capabilities</li>
+                    <li>Optimized inference pipeline</li>
+                </ul>
+
+                <h3>Tracking Integration</h3>
+                <p>Implements DeepSORT (Deep Simple Online Realtime Tracking) algorithm with:</p>
+                <ul>
+                    <li>Integrated detection and tracking pipeline</li>
+                    <li>Efficient ID management system</li>
+                    <li>Robust occlusion handling</li>
+                </ul>
+
+                <h3>XAI Integration</h3>
+                <p>Explainable AI component provides transparency through:</p>
+                <ul>
+                    <li>Real-time saliency map generation</li>
+                    <li>Feature importance visualization</li>
+                    <li>Decision confidence metrics</li>
+                </ul>
+            </div>
+
+            <div class="technology-stack mb-5">
+                <h2>Technology Stack</h2>
+                <p>Our system utilizes the following technologies:</p>
+                <ul>
+                    <li><strong>Object Detection:</strong> YOLOv10 (our primary model) with support for YOLOv8</li>
+                    <li><strong>Tracking:</strong> DeepSORT algorithm for reliable multi-object tracking</li>
+                    <li><strong>Backend:</strong> Python with Flask for web service integration</li>
+                    <li><strong>Frontend:</strong> HTML5, CSS3 and JavaScript with Bootstrap framework</li>
+                    <li><strong>Data Analysis:</strong> NumPy, Pandas, and custom analytics modules</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="h5 mb-0">Project Stats</h3>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span>Detection Accuracy</span>
+                        <span class="badge bg-primary">94.5%</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span>Processing Speed</span>
+                        <span class="badge bg-success">45 FPS</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>Tracking Precision</span>
+                        <span class="badge bg-info">92.8%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="h5 mb-0">Our Team</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-3">
+                            <strong>Aatrey Anand V</strong><br>
+                            <small class="text-muted">Lead Developer</small>
+                        </li>
+                        <li class="mb-3">
+                            <strong>Gautham B</strong><br>
+                            <small class="text-muted">Lead Developer</small>
+                        </li>
+                        <li>
+                            <strong>Mrss. K. Sangeetha</strong><br>
+                            <small class="text-muted">Project Mentor</small>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2>Future Improvements</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5>Multi-Camera Integration</h5>
+                            <p>Implementation of synchronized detection and tracking across multiple camera feeds with unified ID management.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5>Advanced Occlusion Handling</h5>
+                            <p>Enhanced tracking during complex occlusions using temporal information and predicted trajectories.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5>Environmental Adaptation</h5>
+                            <p>Development of adaptive learning mechanisms for varying environmental conditions and scenarios.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

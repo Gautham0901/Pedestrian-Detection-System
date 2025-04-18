@@ -1,0 +1,36 @@
+# Core dependencies
+numpy>=1.24.3
+opencv-python>=4.8.0
+torch>=2.0.1
+torchvision>=0.15.2
+ultralytics>=8.0.0
+deep-sort-realtime>=1.3.0
+captum>=0.6.0
+
+# Utilities
+PyYAML>=6.0
+pandas>=2.0.3
+matplotlib>=3.4.0
+seaborn>=0.11.0
+
+# Logging and debugging
+tqdm>=4.62.0
+
+# Web interface
+flask>=3.0.0
+flask-cors>=4.0.0
+flask-socketio>=5.3.0
+
+# ML & Analytics
+scikit-learn>=1.0.0
+tensorflow>=2.0.0
+
+# XAI tools
+grad-cam>=1.4.0
+lime>=0.2.0.1
+
+# Excel tools
+openpyxl>=3.0.0
+
+# Add these dependencies
+plotly>=5.0.0

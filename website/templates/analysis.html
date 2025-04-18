@@ -1,0 +1,408 @@
+{% extends 'base.html' %}
+
+{% block title %}Pedestrian Detection System - Analysis{% endblock %}
+
+{% block extra_css %}
+<style>
+    .gallery-card {
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: #fff;
+        margin-bottom: 2rem;
+        border: 1px solid rgba(0,0,0,.1);
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    .gallery-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .gallery-card .card-img-top,
+    .gallery-card video {
+        height: 300px;
+        object-fit: cover;
+        border-radius: 8px 8px 0 0;
+    }
+    
+    .gallery-card .card-body {
+        padding: 1.5rem;
+        background-color: #fff;
+    }
+    
+    .gallery-card .card-title {
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+        color: #2c3e50;
+    }
+    
+    .gallery-card .card-text {
+        color: #6c757d;
+    }
+    
+    .row.g-4 {
+        --bs-gutter-x: 2rem;
+        --bs-gutter-y: 2rem;
+    }
+    
+    .modal-body img,
+    .modal-body video {
+        width: 100%;
+        max-height: 70vh;
+        object-fit: contain;
+    }
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <h1 class="mb-4">System Analysis & Comparison</h1>
+        
+        <div class="alert alert-info">
+            <h4 class="alert-heading">Comparative Analysis</h4>
+            <p>A detailed comparison between our integrated approach and traditional pedestrian detection systems.</p>
+        </div>
+        
+        <div class="row mb-5">
+            <div class="col-lg-12">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">System Comparison</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>Our System (YOLOv10 + DeepSORT)</th>
+                                        <th>Traditional Systems</th>
+                                        <th>Key Advantage</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Architecture</td>
+                                        <td>Integrated detection and tracking</td>
+                                        <td>Separate detection and tracking modules</td>
+                                        <td>Reduced latency and better coordination</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Processing Pipeline</td>
+                                        <td>Single-pass detection and tracking</td>
+                                        <td>Multiple sequential operations</td>
+                                        <td>Improved processing efficiency</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Explainability</td>
+                                        <td>Real-time XAI visualization</td>
+                                        <td>Black box approach</td>
+                                        <td>Transparent decision-making process</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Resource Usage</td>
+                                        <td>Optimized memory and CPU usage</td>
+                                        <td>Higher resource requirements</td>
+                                        <td>Better system efficiency</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Maintenance</td>
+                                        <td>Single unified system</td>
+                                        <td>Multiple components to maintain</td>
+                                        <td>Easier system maintenance</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card shadow">
+                    <div class="card-header bg-success text-white">
+                        <h3 class="mb-0">Technical Benefits</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <h5>Integrated Architecture</h5>
+                                <p>Single pipeline processing reduces computational overhead and improves tracking consistency.</p>
+                            </li>
+                            <li class="list-group-item">
+                                <h5>XAI Integration</h5>
+                                <p>Real-time visualization of detection decisions provides transparency and validation.</p>
+                            </li>
+                            <li class="list-group-item">
+                                <h5>Optimized Performance</h5>
+                                <p>Unified model approach enables better resource utilization and faster processing.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-lg-12">
+            <div class="card shadow mb-5">
+                <div class="card-header bg-info text-white">
+                    <h3 class="mb-0">System Performance Metrics</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="gallery-card h-100" data-bs-toggle="modal" data-bs-target="#metricsModal1">
+                                <img src="{{ url_for('static', filename='images/results/inference_time_plot.png') }}" 
+                                     class="card-img-top" alt="Inference Time Distribution">
+                                <div class="card-body">
+                                    <h5 class="card-title">Inference Time Distribution</h5>
+                                    <p class="card-text">Analysis of model's processing speed per frame</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="gallery-card h-100" data-bs-toggle="modal" data-bs-target="#metricsModal2">
+                                <img src="{{ url_for('static', filename='images/results/memory_usage_plot.png') }}" 
+                                     class="card-img-top" alt="Memory Usage Over Time">
+                                <div class="card-body">
+                                    <h5 class="card-title">Memory Usage Over Time</h5>
+                                    <p class="card-text">System memory consumption analysis</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="gallery-card h-100" data-bs-toggle="modal" data-bs-target="#metricsModal3">
+                                <img src="{{ url_for('static', filename='images/results/fps_plot.png') }}" 
+                                     class="card-img-top" alt="FPS Distribution">
+                                <div class="card-body">
+                                    <h5 class="card-title">FPS Distribution</h5>
+                                    <p class="card-text">Frame processing rate analysis</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="gallery-card h-100" data-bs-toggle="modal" data-bs-target="#metricsModal4">
+                                <img src="{{ url_for('static', filename='images/results/detections_plot.png') }}" 
+                                     class="card-img-top" alt="Detections per Frame">
+                                <div class="card-body">
+                                    <h5 class="card-title">Detections per Frame</h5>
+                                    <p class="card-text">Analysis of detection count over time</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Metrics Modals -->
+<div class="modal fade" id="metricsModal1" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Inference Time Distribution</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{ url_for('static', filename='images/results/inference_time_plot.png') }}" 
+                     class="img-fluid" alt="Inference Time Distribution">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="metricsModal2" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Memory Usage Over Time</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{ url_for('static', filename='images/results/memory_usage_plot.png') }}" 
+                     class="img-fluid" alt="Memory Usage Over Time">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="metricsModal3" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">FPS Distribution</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{ url_for('static', filename='images/results/fps_plot.png') }}" 
+                     class="img-fluid" alt="FPS Distribution">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="metricsModal4" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detections per Frame</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{ url_for('static', filename='images/results/detections_plot.png') }}" 
+                     class="img-fluid" alt="Detections per Frame">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h3 class="mb-0">Detection Results Gallery</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row g-4">
+                        <!-- Images Section -->
+                        <div class="col-md-4">
+                            <div class="gallery-card h-100" data-bs-toggle="modal" data-bs-target="#imageModal1">
+                                <img src="{{ url_for('static', filename='images/results/detection_1.png') }}" 
+                                     class="card-img-top" alt="Detection Result 1">
+                                <div class="card-body">
+                                    <h5 class="card-title">Pedestrian Detection</h5>
+                                    <p class="card-text">Real-time detection with bounding boxes</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="gallery-card h-100" data-bs-toggle="modal" data-bs-target="#imageModal2">
+                                <img src="{{ url_for('static', filename='images/results/detection_2.png') }}" 
+                                     class="card-img-top" alt="Detection Result 2">
+                                <div class="card-body">
+                                    <h5 class="card-title">XAI Visualization</h5>
+                                    <p class="card-text">Explainable AI detection results</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="gallery-card h-100" data-bs-toggle="modal" data-bs-target="#imageModal3">
+                                <img src="{{ url_for('static', filename='images/results/detection_3.png') }}" 
+                                     class="card-img-top" alt="Detection Result 3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Tracking Results</h5>
+                                    <p class="card-text">Multi-object tracking visualization</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Remove video section and its cards -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Add image modals -->
+<div class="modal fade" id="imageModal2">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">XAI Visualization</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{ url_for('static', filename='images/results/detection_2.png') }}" 
+                     class="img-fluid" alt="XAI Result">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="imageModal3">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tracking Results</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{ url_for('static', filename='images/results/detection_3.png') }}" 
+                     class="img-fluid" alt="Tracking Result">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add before other modals -->
+<div class="modal fade" id="imageModal1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Pedestrian Detection</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{ url_for('static', filename='images/results/detection_1.png') }}" 
+                     class="img-fluid" alt="Detection Result">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Keep only image modals -->
+<div class="modal fade" id="imageModal2">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">XAI Visualization</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{ url_for('static', filename='images/results/detection_2.png') }}" 
+                     class="img-fluid" alt="XAI Result">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="imageModal3">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tracking Results</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{ url_for('static', filename='images/results/detection_3.png') }}" 
+                     class="img-fluid" alt="Tracking Result">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add before other modals -->
+<div class="modal fade" id="imageModal1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Pedestrian Detection</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{ url_for('static', filename='images/results/detection_1.png') }}" 
+                     class="img-fluid" alt="Detection Result">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Remove all video modals -->
+{% endblock content %}
